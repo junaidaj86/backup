@@ -1,0 +1,1 @@
+In this form of scaling, we can scale max to which a system can hold its capacity, like increase RAM, Hard disk increasing CPU. after which we cannot scale.

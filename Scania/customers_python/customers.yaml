@@ -1,0 +1,1506 @@
+# Iris internal file
+# Enable anonymous user authentication for schema registry
+---
+schema:
+  enableAnonymousUserAccess: true
+# Used to express ownership of a topic-prefix or group prefix.
+customers:
+  - name: inad
+    principals:
+      owners:
+        - type: group
+          name: iris-co2-users
+        - type: group
+          name: iris-nile-users
+        - type: group
+          name: iris-webstars-users
+      other:
+        - type: group
+          name: iris-co2-psa
+        - type: group
+          name: iris-co2-ppsa
+        - type: group
+          name: iris-nile-psa
+        - type: group
+          name: iris-nile-ppsa
+        - type: group
+          name: iris-webstars-psa
+    topicPrefixes:
+      - logistics.supplychain.co2calculationsystem
+      - logistics.supplychain.nilepackaging
+      - logistics.supplychain.webstarsapi
+    consumerGroupPrefixes:
+      - co2-
+      - nile-
+      - webstars-
+    schemas:
+      enabled: true
+    principalMappings:
+      - serviceAccount: co2_consumer_client # Prod account
+        oauth: co2_consumer_client
+        clientIpCidrs:
+          - 63.33.229.136/32 # NAT GW inad aws prod
+          - 34.247.141.22/32 # NAT GW inad aws prod
+      - serviceAccount: nile_consumer # Prod account
+        oauth: nile_consumer
+        clientIpCidrs:
+          - 63.33.229.136/32 # NAT GW inad aws prod
+          - 34.247.141.22/32 # NAT GW inad aws prod
+      - serviceAccount: co2_preprod_consumer # Preprod account
+        oauth: co2_preprod_consumer
+        clientIpCidrs:
+          - 63.33.229.136/32 # NAT GW inad aws prod
+          - 34.247.141.22/32 # NAT GW inad aws prod
+      - serviceAccount: nile_preprod_consume # Preprod account
+        oauth: nile_preprod_consume
+        clientIpCidrs:
+          - 63.33.229.136/32 # NAT GW inad aws prod
+          - 34.247.141.22/32 # NAT GW inad aws prod
+      - serviceAccount: webstars_consumer  # Prod account
+        oauth: webstars_consumer
+        clientIpCidrs:
+          - l5854p.sss.se.scania.com # DMZ Server RITM0377067 FW Order
+
+  - name: sparta
+    principals:
+      owners:
+        - type: group
+          name: iris-sparta-users
+      other:
+        - type: group
+          name: iris-sparta-psa
+    topicPrefixes:
+      - ordertodelivery.sparta
+    consumerGroupPrefixes:
+      - bridge-consumer-prod
+      - distribution-sparta-consumer-group-prod
+      - distribution-bridge-consumer-group-prod
+      - sparta-distribution-result-consumer-group-prod
+    schemas:
+      enabled: true
+    principalMappings:
+      - serviceAccount: sairisp-sparta
+        mtls: CN=sparta.prod.aws.scania.com
+        sourceIpCidrs:
+          - 99.80.237.127/32
+          - 34.241.47.240/32
+          - 138.106.44.25/32
+
+  - name: sma
+    principals:
+      owners:
+        - type: group
+          name: iris-sma-users
+      other:
+        - type: group
+          name: iris-sma-psa
+    topicPrefixes:
+      - sales.sma.
+    consumerGroupPrefixes:
+      - sales.sma.
+      - sma.uptime
+      - sma.reported.module
+      - sma.operational.prediction
+      - sma.pii.product
+    schemas:
+      enabled: false
+    principalMappings:
+      - serviceAccount: sma-streaming-prod
+        oauth: sma-streaming-prod
+        sourceIpCidrs:
+          - 54.220.95.246/32
+          - 54.78.39.39/32
+
+  - name: iris
+    principals:
+      owners:
+        - type: user
+          name: serviceirisssp
+      other:
+    topicPrefixes:
+      - iris
+    schemas:
+      enabled: false
+    principalMappings:
+      - serviceAccount: sairisp-clusterlink
+        mtls: CN=clusterlink.iris-streaming.prod.aws.scania.com
+
+  - name: digitaldealer
+    principals:
+      owners:
+        - type: group
+          name: iris-dd-users
+      other:
+        - type: group
+          name: iris-dd-psa
+    topicPrefixes:
+      - drp.digitaldealer.
+    consumerGroupPrefixes:
+      - scania-kafka-gateway
+      - sws_archived_job_prod
+    schemas:
+      enabled: true
+    principalMappings:
+      - serviceAccount: sairisp-dd
+        mtls: CN=scania-kafka-client.digitaldealer.prod.aws.scania.com
+        sourceIpCidrs:
+          - 34.252.132.176/32
+          - 52.214.254.36/32
+          - 52.48.64.64/32
+          - 54.75.201.214/32
+          - 79.125.8.150/32
+
+  - name: digitaldealer-italy
+    principals:
+      owners:
+        - type: group
+          name: iris-dditaly-users
+      other:
+        - type: group
+          name: iris-dditaly-psa
+    schemas:
+      enabled: false
+    consumerGroupPrefixes:
+      - ers-streamingclient-grp
+    principalMappings:
+      - serviceAccount: sairisp-italy-dd
+        mtls: CN=prod.ers.scania.it
+        sourceIpCidrs:
+          - 213.21.183.210/32
+
+  - name: digitaldealer-france
+    principals:
+      owners:
+        - type: group
+          name: iris-ddfrance-users
+      other:
+        - type: group
+          name: iris-ddfrance-psa
+    consumerGroupPrefixes:
+      - irium-kafka
+    schemas:
+      enabled: false
+    principalMappings:
+      # Garage Herment
+      - serviceAccount: sairisp-gh-dd
+        mtls: CN=herment-dd.irium-cloud.com
+        sourceIpCidrs:
+          - 90.102.173.249/32
+      # Occitanie Poids Lourds
+      - serviceAccount: sairisp-opl-dd
+        mtls: CN=opl-dd.irium-cloud.com
+        sourceIpCidrs:
+          - 185.141.5.92/32
+      # SFR
+      - serviceAccount: sairisp-sfr-dd
+        mtls: CN=sfr-dd.irium-cloud.com
+        sourceIpCidrs:
+          - 138.106.67.170/32
+      # Scannord
+      - serviceAccount: sairisp-scannord-dd
+        mtls: CN=scannord-dd.irium-cloud.com
+        sourceIpCidrs:
+          - 77.205.17.8/32
+      # DIAN
+      - serviceAccount: sairisp-dian-dd
+        mtls: CN=dian-dd.irium-cloud.com
+        sourceIpCidrs:
+          - 95.128.151.6/32
+      # Dordogne Poids Lourds
+      - serviceAccount: sairisp-dordogne-dd
+        mtls: CN=dordognepl-dd.irium-cloud.com
+        sourceIpCidrs:
+          - 217.128.239.158/32
+      - serviceAccount: sairisp-dordogne-dd
+        mtls: CN=dordogne-dd.irium-cloud.com
+        sourceIpCidrs:
+          - 178.157.32.51/32
+      # Garage de St Pierre
+      - serviceAccount: sairisp-stpierre-dd
+        mtls: CN=ggestpierre-dd.irium-cloud.com
+      - serviceAccount: sairisp-stpierre-dd
+        mtls: CN=stpierre-dd.irium-cloud.com
+        sourceIpCidrs:
+          - 185.195.249.53/32
+      # Ponthou Poids Sud
+      - serviceAccount: sairisp-ponthou-dd
+        mtls: CN=ponthou-dd.irium-cloud.com
+        sourceIpCidrs:
+          - 85.69.198.62/32
+      # Garage Nevers Sud
+      - serviceAccount: sairisp-nevers-dd
+        mtls: CN=nevers-dd.irium-cloud.com
+        sourceIpCidrs:
+          - 62.160.26.185/32
+      # La Haubette Poids Lourds
+      - serviceAccount: sairisp-lhpl-dd
+        mtls: CN=lhpl-dd.irium-cloud.com
+        sourceIpCidrs:
+          - 213.223.172.109/32
+      # Garage Aubree
+      - serviceAccount: sairisp-aubree-dd
+        mtls: CN=aubree-dd.irium-cloud.com
+        sourceIpCidrs:
+          - 77.74.214.180/32
+      # Gavard
+      - serviceAccount: sairisp-gavard-dd
+        mtls: CN=gavard-dd.irium-cloud.com
+        sourceIpCidrs:
+          - 77.74.214.180/32
+          - 176.162.179.137/32
+      # EYDOUX
+      - serviceAccount: sairisp-eydoux-dd
+        mtls: CN=eydoux-dd.irium-cloud.com
+        sourceIpCidrs:
+          - 185.163.220.54/32
+      # TSD
+      - serviceAccount: sairisp-tsd-dd
+        mtls: CN=tsd-dd.irium-cloud.com
+        sourceIpCidrs:
+          - 82.196.24.90/32
+      # SCANIA MAROC
+      - serviceAccount: sairisp-maroc-dd
+        mtls: CN=maroc-dd.irium-cloud.com
+        sourceIpCidrs:
+          - 197.230.54.9/32
+      # COULOMMIERS Poids Lourd
+      - serviceAccount: sairisp-coulom-dd
+        mtls: CN=coulommiers-dd.irium-cloud.com
+        sourceIpCidrs:
+          - 194.3.29.45/32
+
+  - name: digitaldealer-kyda
+    principals:
+      owners:
+        - type: group
+          name: iris-ddkyda-users
+      other:
+        - type: group
+          name: iris-ddkyda-psa
+    topicPrefixes:
+      - drp.digitaldealer.analytics
+      - drp.digitaldealer.user
+    consumerGroupPrefixes:
+      - RetailDigitalisationConsumerGroup
+    schemas:
+      enabled: false
+    principalMappings:
+      - serviceAccount: sairisp-kyda-dd
+        mtls: CN=api.retaildigitalisation.prod.aws.scania.com
+        sourceIpCidrs:
+          - 34.252.132.176/32
+          - 52.48.64.64/32
+          - 52.214.254.36/32
+
+  # Brazil - Conterrânea´s/PBLopes/Escandinávia
+  - name: digitaldealer-brazil
+    principals:
+      owners:
+        - type: group
+          name: iris-ddbrazil-users
+      other:
+        - type: group
+          name: iris-ddbrazil-psa
+    consumerGroupPrefixes:
+      - b797d35e-a9b4-4681-839a-07788303e69e  # Conterrânea´s consumer
+      - 91a89cf0-56cd-45d8-a8f7-896a97308e4d  # Mossoró´s consumer
+      - 02c548f5-5915-4652-9661-df8d7ea1118b  # Macaíba´s consumer
+      - grp4.pblopes.prod.aws.scania.com  # PBLopes consumer
+      - fmp-sp-aws-consumer  # Escandinávia consumer
+    schemas:
+      enabled: false
+    principalMappings:
+      - serviceAccount: sairisp-brazilca-dd  # Conterrânea/Mossoró/Macaíba
+        mtls: CN=digitaldealerprod.carmais.com.br
+        sourceIpCidrs:
+          - 186.225.46.30/32
+          - 200.194.101.215/32
+      - serviceAccount: sairisp-brazilpb-dd  # PbLopes
+        mtls: CN=prod.pblopes.com.br
+        sourceIpCidrs:
+          - 200.250.13.101/32
+          - 189.39.103.226/32
+          - 189.30.180.250/32
+      - serviceAccount: sairisp-braziles-dd  # Escandinávia
+        mtls: CN=kafka.mazatarraf.com.br
+        sourceIpCidrs:
+          - 200.160.125.161/32
+
+  - name: digitaldealer-keyloop
+    principals:
+      owners:
+        - type: group
+          name: iris-ddkeyloop-users
+      other:
+        - type: group
+          name: iris-ddkeyloop-psa
+    consumerGroupPrefixes:
+      - scania-dd-event-consumer
+    schemas:
+      enabled: false
+    principalMappings:
+      - serviceAccount: sairisp-keyloop-dd
+        mtls: CN=scania-ddeventconsumer-adpt.ap.keyloop.io
+        sourceIpCidrs:
+          - 3.248.102.160/32
+          - 34.240.51.87/32
+          - 3.115.151.37/32
+          - 3.115.195.32/32
+      - serviceAccount: sairisp-keyloop-dd
+        mtls: CN=scania-ddeventconsumer-adpt.eu.keyloop.io
+
+  - name: fms-serviceplanner
+    principals:
+      owners:
+        - type: group
+          name: iris-fmssp-users
+      other:
+        - type: group
+          name: iris-fmssp-psa
+    topicPrefixes:
+      - kp.serviceplanning.maintenance.booking.workorder
+      - serviceplanning.customerfindings.prod
+      - serviceplanning.messages.prod
+    consumerGroupPrefixes:
+      - fmp-sp
+    schemas:
+      enabled: true
+    principalMappings:
+      - serviceAccount: sairisp-fmssp
+        mtls: CN=sp-workordereventpublisher-service.apisp.cs.scania.com
+      - serviceAccount: sp-kafka
+        oauth: sp-kafka
+        sourceIpCidrs:
+          - 52.215.102.202/32
+          - 34.241.28.133/32
+      - serviceAccount: sairisp-fmssp
+        mtls: CN=sp-workordereventconsumer-service.apisp.cs.scania.com
+      - serviceAccount: sairisp-fmssp
+        mtls: CN=sp-smaeventconsumer-service.apisp.cs.scania.com
+
+  - name: coc
+    principals:
+      owners:
+        - type: group
+          name: iris-coc-users
+      other:
+        - type: group
+          name: iris-coc-psa
+    consumerGroupPrefixes:
+      - coc-kafka-production-consumer
+    schemas:
+      enabled: false
+    principalMappings:
+      - serviceAccount: coc_kafka_prod
+        oauth: coc_kafka_prod
+        sourceIpCidrs:
+          - 54.75.219.210/32
+          - 34.251.119.128/32
+
+  - name: cadvpdm
+    principals:
+      owners:
+        - type: group
+          name: iris-cadvpdm-users
+      other:
+        - type: group
+          name: iris-cadvpdm-psa
+    topicPrefixes:
+      - productdevelopment.cadvpdm.
+    schemas:
+      enabled: false
+    principalMappings:
+      - serviceAccount: enovia
+        oauth: enovia
+        sourceIpCidrs:
+          - 138.106.9.46/32
+          - 138.106.9.111/32
+          - 138.106.9.131/32
+
+  - name: pricepoint
+    principals:
+      owners:
+        - type: group
+          name: iris-pricepoint-users
+      other:
+        - type: group
+          name: iris-pricepoint-psa
+    topicPrefixes:
+      - kp.spareparts.
+    consumerGroupPrefixes:
+      - PricePoint
+    schemas:
+      enabled: false
+    principalMappings:
+      - serviceAccount: sairisp-pricepoint
+        mtls: CN=l6793.sss.se.scania.com,CN=pricepoint.nifiprod.scania.com,OU=Scania CV AB,O=IACA,L=Södertälje,ST=SE,C=SE
+        sourceIpCidrs:
+          - 138.106.146.17/32
+
+  - name: salesportal
+    principals:
+      owners:
+        - type: group
+          name: iris-salesportal-users
+      other:
+        - type: group
+          name: iris-salesportal-psa
+    topicPrefixes:
+      - sales.quotation.product.
+      - sales.ordersplit.product.
+    consumerGroupPrefixes:
+      - sales.salesportal.
+    schemas:
+      enabled: false
+    principalMappings:
+      - serviceAccount: sairisp-salesportal
+        mtls: CN=salesportal.prod.aws.scania.com
+        sourceIpCidrs:
+          - 534.249.6.72/32
+          - 18.203.168.76/32
+
+  # Scania Germany SDPS - also known as DOIT
+  - name: doit
+    principals:
+      owners:
+        - type: group
+          name: iris-doit-users
+      other:
+        - type: group
+          name: iris-doit-psa
+    topicPrefixes:
+      - sales.quotation.product.
+      - sales.ordersplit.product.
+      - dms.sdps.
+    consumerGroupPrefixes:
+      - scaniaGermanySdps
+    schemas:
+      enabled: true
+    principalMappings:
+      - serviceAccount: ger_kafka_sdps
+        oauth: ger_kafka_sdps
+        sourceIpCidrs:
+          - 62.153.167.75/32
+          - 62.153.167.76/32
+      - serviceAccount: ger_kafka_sapo
+        oauth: ger_kafka_sapo
+      - serviceAccount: ger_kafka_dig_de
+        oauth: ger_kafka_dig_de
+
+  - name: slip
+    principals:
+      owners:
+        - type: group
+          name: iris-slip-users
+      other:
+        - type: group
+          name: iris-slip-psa
+    topicPrefixes:
+      - logistics.it.slip.
+      - spm.central.
+    consumerGroupPrefixes:
+      - slip.prod
+    schemas:
+      enabled: false
+    principalMappings:
+      - serviceAccount: slip-kafkasure-prod
+        oauth: slip-kafkasure-prod
+      - serviceAccount: sap_slip_demand_prod
+        oauth: sap_slip_demand_prod
+      - serviceAccount: spm-surroundsystem
+        oauth: spm-surroundsystem
+        clientIpCidrs:
+          - 138.106.10.67/32
+          - 138.106.13.33/32
+          - 18.202.145.174/32
+          - 54.73.233.109/32
+
+  - name: iacob
+    principals:
+      owners:
+        - type: group
+          name: iris-iacob-users
+      other:
+        - type: group
+          name: iris-iacob-psa
+    topicPrefixes:
+      - o2d.order
+      - o2d.invoice
+      - o2d.address.t48
+    schemas:
+      enabled: false
+    principalMappings:
+      - serviceAccount: iacob-consum
+        oauth: iacob-consum
+      - serviceAccount: iacob-producer
+        oauth: iacob-producer
+        sourceIpCidrs:
+          - 138.106.61.183/32
+
+  - name: susy
+    principals:
+      owners:
+        - type: group
+          name: iris-susy-users
+      other:
+        - type: group
+          name: iris-susy-psa
+    topicPrefixes:
+      - RoD.vehicle_service_info.subscription.SuSy.
+      - RoD.vehicle_service_info.customer.SuSy.
+    consumerGroupPrefixes:
+      - prod-susy-consumer-group
+      - prod-Susy-consumer-group
+    schemas:
+      enabled: false
+    principalMappings:
+      - serviceAccount: prod_susy_kafka
+        oauth: prod_susy_kafka
+        sourceIpCidrs:
+          - 138.106.50.45/32
+
+  - name: datalake
+    principals:
+      owners:
+        - type: group
+          name: iris-datalake-users
+      other:
+        - type: group
+          name: iris-datalake-psa
+    topicPrefixes:
+      - logistics.supplychain.co2calculationsystem.itmslegs.input
+      - logistics.supplychain.nilepackaging.spc.calloffs.data
+    consumerGroupPrefixes:
+      - nifi_new_cluster
+      - prodhadoop_nifi_
+      - sdl_proxio_output_2
+      - sws_archived_job_prod_datalake
+      - sdl_piidocumentsinfo_production
+      - datalake_nifi_ddealer_prod
+    schemas:
+      enabled: false
+    principalMappings:
+      - serviceAccount: sairisp-datalake
+        mtls: CN=datalake.prod.scania.com,OU=SCANIA CV AB,O=IXCB,L=sodertalje,ST=SE,C=SE
+
+  - name: sdp3-oem
+    principals:
+      owners:
+        - type: group
+          name: iris-sdp3-users
+      other:
+        - type: group
+          name: iris-sdp3-psa
+    topicPrefixes:
+      - license.sdp3oem.
+    schemas:
+      enabled: true
+    principalMappings:
+      - serviceAccount: sairisp-sdp3
+        mtls: CN=sdp3oem.prod.aws.scania.com
+        sourceIpCidrs:
+          - 34.247.96.177/32
+          - 99.80.255.106/32
+
+  - name: sws
+    principals:
+      owners:
+        - type: group
+          name: iris-sws-users
+      other:
+        - type: group
+          name: iris-sws-psa
+    topicPrefixes:
+      - vehicle_service_info.workshop.job.sws.
+    consumerGroupPrefixes:
+      - prod_sws_kafka
+    schemas:
+      enabled: false
+    principalMappings:
+      - serviceAccount: sairisp-sws
+        mtls: CN=kafka-publisher.sws-prod.int-prod.aws.scania.com
+      - serviceAccount: sairisp-sws
+        mtls: CN=kafka-certificate.sws-prod.int-prod.aws.scania.com
+        clientIpCidrs:
+          - 52.48.229.215/32
+          - 52.16.137.224/32
+
+  - name: swsft
+    principals:
+      owners:
+        - type: group
+          name: iris-swsft-users
+      other:
+        - type: group
+          name: iris-swsft-psa
+    consumerGroupPrefixes:
+      - prod_sws_kafka
+    schemas:
+      enabled: false
+    principalMappings:
+      - serviceAccount: sairisp-swsft
+        mtls: CN=kafka-certificate.sws-ft.int-prod.aws.scania.com
+        clientIpCidrs:
+          - 99.81.252.41/32
+          - 99.81.199.213/32
+
+  - name: sds
+    principals:
+      owners:
+        - type: group
+          name: iris-sds-users
+      other:
+        - type: group
+          name: iris-sds-psa
+    topicPrefixes:
+      - dms.qing.updatenotification
+      - qing.vehiclechanges.prod
+    consumerGroupPrefixes:
+      - 105269E3-710C-5790-B934-916C851B4CB7
+      - 4790-A934-916C851B4CB7
+    schemas:
+      enabled: false
+    principalMappings:
+      - serviceAccount: sds-kafka-prod
+        oauth: sds-kafka-prod
+        sourceIpCidrs:
+          - 138.106.11.24/32
+
+  - name: queri
+    principals:
+      owners:
+        - type: group
+          name: iris-queri-users
+      other:
+        - type: group
+          name: iris-queri-psa
+    topicPrefixes:
+      - warranty.claim.organization.queri.
+      - warranty.claim.assessment.queri.
+      - warranty.claim.assessment.swat.
+      - market-action.rctc.
+    consumerGroupPrefixes:
+      - queri.prod
+    schemas:
+      enabled: false
+    principalMappings:
+      - serviceAccount: sairisp-queri
+        mtls: CN=queri.prod.aws.scania.com
+      - serviceAccount: sairisp_queri
+        oauth: sairisp_queri
+        sourceIpCidrs:
+          - 138.106.146.17/32 #nifiprod.scania.com
+          - 52.50.176.129/32 #AWS
+          - 54.171.133.194/32 #AWS
+
+  - name: mona
+    principals:
+    topicPrefixes:
+      - mona.
+    schemas:
+      enabled: false
+    connect:
+      dedicated: false
+      name: connect-onprem
+
+  - name: appian
+    principals:
+      owners:
+        - type: group
+          name: iris-appian-users
+      other:
+        - type: group
+          name: iris-appian-psa
+    topicPrefixes:
+      - mona.
+    consumerGroupPrefixes:
+      - appian-
+    schemas:
+      enabled: false
+    principalMappings:
+      - serviceAccount: appian-glp-account
+        oauth: appian-glp-account
+        sourceIpCidrs:
+          - 13.48.94.228/32
+          - 13.53.105.142/32
+          - 13.53.105.192/32
+          - 13.49.190.42/32
+          - 13.49.94.220/32
+          - 13.51.22.144/32
+
+  - name: rpa
+    principals:
+      owners:
+        - type: group
+          name: iris-rpa-users
+      other:
+        - type: group
+          name: iris-rpa-psa
+    topicPrefixes:
+      - automation.rpa.
+    schemas:
+      enabled: false
+#    principalMappings:      #RPA is using rest-proxy to produce/consume messages
+#      - serviceAccount: iris-rpa-psa
+#        sourceIpCidrs:
+#          - 138.106.141.111/32
+#          - 138.106.166.66/32
+#          - 138.106.140.42/32
+#          - 10.254.227.196/32
+#          - 10.254.225.146/32
+
+  - name: pii
+    principals:
+      owners:
+        - type: group
+          name: iris-pii-users
+      other:
+        - type: group
+          name: iris-pii-psa
+    topicPrefixes:
+      - pii.
+    consumerGroupPrefixes:
+      - pii-
+    schemas:
+      enabled: false
+    principalMappings:
+      - serviceAccount: pii
+        oauth: pii
+        sourceIpCidrs:
+          - 34.254.129.70/32 #AWS
+          - 52.50.8.41/32 #AWS
+
+  - name: plus # Renamed from OTA
+    principals:
+      owners:
+        - type: group
+          name: iris-plus-users
+      other:
+        - type: group
+          name: iris-plus-psa
+    topicPrefixes:
+      - connected_services.plus.job.distribution.job_status_changed.
+    schemas:
+      enabled: false
+    principalMappings:
+      - serviceAccount: sairisp-plus
+        mtls: CN=sqstokafka.apipl.cs.scania.com
+        sourceIpCidrs:
+          - 54.220.214.37/32
+          - 52.16.115.247/32
+
+  - name: tin
+    principals:
+      owners:
+        - type: group
+          name: iris-tin-users
+      other:
+        - type: group
+          name: iris-tin-psa
+    consumerGroupPrefixes:
+      - tin-
+    schemas:
+      enabled: false
+    principalMappings:
+      - serviceAccount: sairisp-tin
+        mtls: CN=sakc.tin.prod.aws.scania.com
+        sourceIpCidrs:
+          - 34.250.88.77/32
+          - 52.215.128.210/32
+      - serviceAccount: tin_sakc
+        oauth: tin_sakc
+
+  - name: conversion
+    principals:
+      owners:
+        - type: group
+          name: iris-conversion-users
+      other:
+        - type: group
+          name: iris-conversion-psa
+    consumerGroupPrefixes:
+      - Conversion
+    schemas:
+      enabled: false
+    principalMappings:
+      - serviceAccount: conversion # Same in devtest and prod
+        oauth: conversion
+      - serviceAccount: sairisp-convers
+        mtls: CN=statusconsumer.conversion.prod.aws.scania.com
+        sourceIpCidrs:
+          - 34.254.126.144/32
+          - 34.255.20.97/32
+
+  - name: qing
+    principals:
+      owners:
+        - type: group
+          name: iris-qing-users
+      other:
+        - type: group
+          name: iris-qing-psa
+    topicPrefixes:
+      - qing.
+    consumerGroupPrefixes:
+      - qing
+      - qing-consumer.conf
+      - qing.conf
+    schemas:
+      enabled: false
+    principalMappings:
+      - serviceAccount: sairisp-qing
+        mtls: CN=qing.prod.aws.scania.com
+        sourceIpCidrs:
+          - 159.8.228.169/32
+          - 159.8.228.170/32
+          - 159.8.231.74/32
+          - 159.8.228.179/32
+          - 159.8.228.163/32
+          - 159.8.231.72/32
+
+  - name: ysfs
+    principals:
+      owners:
+        - type: group
+          name: iris-ysfs-users
+      other:
+        - type: group
+          name: iris-ysfs-psa
+    consumerGroupPrefixes:
+      - ysfs-consumer-group
+    schemas:
+      enabled: false
+    principalMappings:
+      - serviceAccount: sairisp-ysfs
+        mtls: CN=kafka.common.train.ysml.prod.aws.scania.com
+      - serviceAccount: sairisp-ysfs
+        mtls: CN=kafka.common.prod.ysml.prod.aws.scania.com
+        sourceIpCidrs:
+          - 54.171.176.109/32
+          - 54.228.3.42/32
+
+  - name: fmat
+    principals:
+      owners:
+        - type: group
+          name: iris-fmat-users
+      other:
+        - type: group
+          name: iris-fmat-psa
+    topicPrefixes:
+      - connected_services.fmat.
+    consumerGroupPrefixes:
+      - fmat-order-consumer
+    schemas:
+      enabled: false
+    principalMappings:
+      - serviceAccount: sairisp-fmat
+        mtls: CN=sqstokafka.apiuc.cs.scania.com
+        sourceIpCidrs:
+          - 63.32.223.16/32
+          - 34.247.59.18/32
+      - serviceAccount: sairisp-fmat
+        mtls: CN=sqstokafka-fmatcustomer.apiuc.cs.scania.com
+
+  - name: cow
+    principals:
+      owners:
+        - type: group
+          name: iris-cow-users
+      other:
+        - type: group
+          name: iris-cow-psa
+    topicPrefixes:
+      - oos.elrond.
+      - o2d.cow.
+      - o2d.invoice
+      - o2d.order
+    consumerGroupPrefixes:
+      - cow
+      - oos
+    schemas:
+      enabled: false
+    principalMappings:
+      - serviceAccount: sairisp-cow
+        mtls: CN=kafka.o2d2.prod.aws.scania.com
+        sourceIpCidrs:
+          - 139.122.196.9/32
+          - 139.122.196.11/32
+          - 139.122.196.12/32
+
+  - name: digitaldealer-siconnet
+    principals:
+      owners:
+        - type: group
+          name: iris-ddsiconnet-users
+      other:
+        - type: group
+          name: iris-ddsiconnet-psa
+    consumerGroupPrefixes:
+      - siconnet-consumer-
+    schemas:
+      enabled: false
+    principalMappings:
+      - serviceAccount: sairisp-siconnet-dd
+        mtls: CN=siconnet.prod.aws.scania.com
+        sourceIpCidrs:
+          - 200.195.57.130/32
+          - 186.248.169.2/32
+          - 200.202.230.226/32
+          - 139.122.208.2/32
+          - 139.122.209.240/32
+          - 139.122.208.251/32
+
+  - name: autodo
+    principals:
+      owners:
+        - type: group
+          name: iris-autodo-users
+      other:
+        - type: group
+          name: iris-autodo-psa
+    topicPrefixes:
+      - oos.elrond.fulfillment.confirmation
+      - oos.elrond.fulfillment.autodo
+    consumerGroupPrefixes:
+      - AutoDo
+    schemas:
+      enabled: false
+    principalMappings:
+      - serviceAccount: sairisp-autodo
+        mtls: CN=kafka-autodo.o2d2.prod.aws.scania.com
+        sourceIpCidrs:
+          - 212.184.113.138/32
+          - 83.246.47.86/32
+
+  - name: sap
+    principals:
+      owners:
+        - type: group
+          name: iris-sap-users
+      other:
+        - type: group
+          name: iris-sap-psa
+    topicPrefixes:
+      - o2d.p2m.sap.
+      - o2d.s2p.sap.
+      - o2d.o2c.sap.
+    consumerGroupPrefixes:
+      - IF_Scania_
+    schemas:
+      enabled: false
+    principalMappings:
+      - serviceAccount: sairisp-sap
+        mtls: CN=scaniaiebcfprd.isuite.scania.com,O=Scania CV AB,L=Södertälje,ST=Stockholm,C=SE
+        sourceIpCidrs:
+          - 3.68.40.83/32
+          - 18.198.18.157/32
+          - 3.68.17.221/32
+          - 3.67.235.98/32
+          - 3.68.38.23/32
+          - 18.198.149.19/32
+          - 3.64.131.199/32
+          - 3.64.88.217/32
+          - 3.64.142.243/32
+
+  - name: prins
+    principals:
+      owners:
+        - type: group
+          name: iris-prins-users
+      other:
+        - type: group
+          name: iris-prins-psa
+      topicPrefixes:
+      - prins.spec
+      - o2d.o2c.ios.sales
+    consumerGroupPrefixes:
+      - prins-ios-consumer-group-prod
+    principalMappings:
+      - serviceAccount: prins_prod
+        oauth: prins_prod
+        sourceIpCidrs:
+          - 46.137.189.205/32
+          - 54.217.148.32/32
+
+  - name: ebba
+    principals:
+      owners:
+        - type: group
+          name: iris-ebba-users
+      other:
+        - type: group
+          name: iris-ebba-psa
+    topicPrefixes:
+      - o2d.p2m.ebba.
+      - ebbatest # Todo: Test topics  to be removed later - Contact sunil for more details
+      - aprisotest
+    consumerGroupPrefixes:
+      - ebba
+      - apriso-kafka-consumer
+      - o2d.p2m.sap.pp.production-order
+      - o2d.p2m.sap.ewm.line-feeding
+    schemas:
+      enabled: false
+    principalMappings:
+      - serviceAccount: sairisp-ebba
+        mtls: CN=ebba.prod.scd.scania.com,OU=INFI,O=EBBA,L=sodertalje,ST=SE,C=SE
+      - serviceAccount: sairisp-ebba
+        mtls: CN=ebbams.prod.scd.scania.com,OU=INFF,O=EBBA,L=sodertalje,ST=SE,C=SE
+        sourceIpCidrs:
+          - SESOG0379 138.106.12.15
+          - SESOG0380 138.106.12.29
+          - SESOG0381 138.106.12.174
+          - SESOG0382 138.106.12.175
+
+  # Oracle CDC Source connector for AGDA . Streaming team is responsible for any maintenance at the moment
+  - name: agda
+    principals:
+      owners:
+        - type: group
+          name: iris-agda-users
+      other:
+        - type: group
+          name: iris-agda-psa
+    topicPrefixes:
+      - o2d.d2p.agda.
+    schemas:
+      enabled: false
+    principalMappings:
+      - serviceAccount: kafka-connect
+        oauth: kafka-connect
+        sourceIpCidrs:
+          - l6857p.sss.se.scania.com
+
+  - name: smds
+    principals:
+      owners:
+        - type: group
+          name: iris-smds-users
+      other:
+        - type: group
+          name: iris-smds-psa
+    topicPrefixes:
+      - pd.legal.smds
+    consumerGroupPrefixes:
+      - sure-smds
+    schemas:
+      enabled: false
+    principalMappings:
+      - serviceAccount: smds_kafka
+        oauth: smds_kafka
+        sourceIpCidrs:
+          - 52.215.143.74/32
+          - 54.246.117.60/32
+
+  - name: sure
+    principals:
+      owners:
+        - type: group
+          name: iris-sure-users
+      other:
+        - type: group
+          name: iris-sure-psa
+    topicPrefixes:
+      - pd.legal.smds
+    consumerGroupPrefixes:
+      - sure-smds
+    schemas:
+      enabled: false
+    principalMappings:
+      - serviceAccount: sure_kafka_prod
+        oauth: sure_kafka_prod
+        sourceIpCidrs:
+          - 52.215.143.74/32
+          - 54.246.117.60/32
+
+  - name: fms
+    principals:
+      owners:
+        - type: group
+          name: iris-fms-users
+      other:
+        - type: group
+          name: iris-fms-psa
+    topicPrefixes:
+      - fms.positions
+      - fms.function-indication
+      - ecce.current-status
+    schemas:
+      enabled: false
+
+  - name: coreentities
+    principals:
+      owners:
+        - type: group
+          name: iris-coreent-users
+      other:
+        - type: group
+          name: iris-coreent-psa
+    topicPrefixes:
+      - connectedservices.coreentities.
+    consumerGroupPrefixes:
+      - ce-prod-pii-fpc-consumer
+      - ce-prod-connected-equipment-consumer
+    schemas:
+      enabled: false
+    principalMappings:
+      - serviceAccount: ce_equip_pub_prod
+        oauth: ce_equip_pub_prod
+      - serviceAccount: ce_pii_kafka_prod
+        oauth: ce_pii_kafka_prod
+        sourceIpCidrs:
+          - 46.51.131.217/16
+          - 52.209.69.137/32
+          - 54.77.85.45/32
+
+  - name: sma-mac
+    principals:
+      owners:
+        - type: group
+          name: iris-smamac-users
+      other:
+        - type: group
+          name: iris-smamac-psa
+    topicPrefixes:
+      - sma.mac
+    consumerGroupPrefixes:
+      - sma.mac.onprem
+    schemas:
+      enabled: true
+    principalMappings:
+      - serviceAccount: sairisp-smamac
+        mtls: CN=planexport.flex.prod.aws.scania.com
+      - serviceAccount: sma-streaming-prod
+        oauth: sma-streaming-prod
+        sourceIpCidrs:
+          - 52.212.179.195/32
+          - 52.50.96.97/32
+
+  - name: enovia
+    principals:
+      owners:
+        - type: group
+          name: iris-enovia-users
+        - type: group
+          name: iris-oas-users
+      other:
+        - type: group
+          name: iris-enovia-psa
+        - type: group
+          name: iris-oas-psa
+    topicPrefixes:
+      - productdevelopment.cadvpdm.oas
+    consumerGroupPrefixes:
+      - enovia
+      - oas
+    schemas:
+      enabled: false
+    principalMappings:
+      - serviceAccount: oas_produce
+        oauth: oas_produce
+      - serviceAccount: enovia_sas
+        oauth: enovia_sas
+        sourceIpCidrs:
+          - 138.106.11.194/32
+          - 138.106.11.179/32
+          - 138.106.33.41/32
+          - 138.106.67.115/32
+          - 138.106.67.116/32
+          - 138.106.67.117/32
+
+  - name: reco2
+    principals:
+      owners:
+        - type: group
+          name: iris-reco2-users
+      other:
+        - type: group
+          name: iris-reco2-psa
+    topicPrefixes:
+      - sales.co2.reco2.
+      - coc.legal.reco2
+      - 3dexperience.co2.
+    consumerGroupPrefixes:
+      - reco2
+    schemas:
+      enabled: false
+    principalMappings:
+      - serviceAccount: reco2_kafka
+        oauth: reco2_kafka
+        sourceIpCidrs:
+          - 34.254.137.58/32
+          - 52.48.101.147/32
+
+  - name: cdc
+    principals:
+      owners:
+        - type: group
+          name: iris-cdc-users
+      other:
+        - type: group
+          name: iris-cdc-psa
+    topicPrefixes:
+      - eccf.cdc
+    consumerGroupPrefixes:
+      - cdc
+      - do-equipmentstatus-cdc-consumer
+    schemas:
+      enabled: false
+    principalMappings:
+      - serviceAccount: cdc_dailyops_c_prod
+        oauth: cdc_dailyops_c_prod
+      - serviceAccount: cdc_dailyops_p_prod
+        oauth: cdc_dailyops_p_prod
+      - serviceAccount: cdc_dataacc_p_prod
+        oauth: cdc_dataacc_p_prod
+      - serviceAccount: cdc_dataacc_c_prod
+        oauth: cdc_dataacc_c_prod
+      - serviceAccount: cs_do_eqstat_cdc_con
+        oauth: cs_do_eqstat_cdc_con
+      - serviceAccount: cdc_vp_c_prod
+        oauth: cdc_vp_c_prod
+      - serviceAccount: cdc_vp_p_prod
+        oauth: cdc_vp_p_prod
+      - serviceAccount: cdc_gsi_c_prod
+        oauth: cdc_gsi_c_prod
+      - serviceAccount: cdc_gsi_p_prod
+        oauth: cdc_gsi_p_prod
+        sourceIpCidrs:
+          - 18.202.59.66/32
+          - 63.33.187.14/32
+          - 34.241.147.29/32
+          - 34.247.237.158/32
+          - 52.30.86.63/32
+
+  - name: secm
+    principals:
+      owners:
+        - type: group
+          name: iris-secm-users
+      other:
+        - type: group
+          name: iris-secm-psa
+    topicPrefixes:
+      - sales.co2.vspec.secm
+    consumerGroupPrefixes:
+      - secm
+    schemas:
+      enabled: false
+    principalMappings:
+      - serviceAccount: svcsecmprod
+        oauth: svcsecmprod
+        sourceIpCidrs:
+          - 139.122.205.125/32
+          - 139.122.205.126/32
+          - 139.122.205.127/32
+          - 52.17.209.199/32
+          - 34.250.124.22/32
+
+  - name: vp #vehicle performance
+    principals:
+      owners:
+        - type: group
+          name: iris-vp-users
+      other:
+        - type: group
+          name: iris-vp-psa
+    consumerGroupPrefixes:
+      - Vehicle-Performance
+      - vp
+    schemas:
+      enabled: false
+    principalMappings:
+      - serviceAccount: fpc_event_loader
+        oauth: fpc_event_loader
+      - serviceAccount: vp_cdc_consumer
+        oauth: vp_cdc_consumer
+        sourceIpCidrs:
+          - 34.240.92.41/32
+          - 34.249.223.236/32
+          - 34.252.186.3/32
+
+  - name: spct
+    principals:
+      owners:
+        - type: group
+          name: iris-spct-users
+      other:
+        - type: group
+          name: iris-spct-psa
+    topicPrefixes:
+      - spct.api.
+    consumerGroupPrefixes:
+      - spct-ecu-
+      - spct-downloadmanager-
+      - spct-sums-api
+    schemas:
+      enabled: false
+    principalMappings:
+      - serviceAccount: spct_kafka
+        oauth: spct_kafka
+        sourceIpCidrs:
+          - 138.106.10.168/32
+          - 138.106.10.169/32
+          - 138.106.32.128/32
+          - 138.106.32.129/32
+          - 138.106.13.143/32
+          - 138.106.13.165/32
+          - 138.106.13.167/32
+          - 138.106.13.170/32
+          - 138.106.6.24/32
+          - 138.106.6.29/32
+          - 138.106.8.218/32
+          - 138.106.8.217/32
+
+  - name: irbf
+    principals:
+      owners:
+        - type: group
+          name: iris-irbf-users
+      other:
+        - type: group
+          name: iris-irbf-psa
+        - type: group
+          name: iris-ch-psa
+        - type: group
+          name: iris-irbf-china6-psa
+    consumerGroupPrefixes:
+      - sure-slip-prod
+      - sure-iacob-prod
+      - adoch-prod
+      - china6-prod
+    schemas:
+      enabled: false
+
+  - name: dataaccess
+    principals:
+      owners:
+        - type: group
+          name: iris-dataaccess-users
+      other:
+        - type: group
+          name: iris-dataaccess-psa
+    consumerGroupPrefixes:
+      - cs-dataaccess-cdc
+    schemas:
+      enabled: false
+    principalMappings:
+      - serviceAccount: cs_da_cdc_consumer
+        oauth: cs_da_cdc_consumer
+        sourceIpCidrs:
+          - 34.252.41.216/32
+          - 52.208.195.38/32
+          - 34.242.125.212/32
+
+  - name: iotmqtt
+    principals:
+      owners:
+        - type: group
+          name: iris-iotmqtt-users
+      other:
+        - type: group
+          name: iris-iotmqtt-psa
+    topicPrefixes:
+      - iot.mqtt.
+    schemas:
+      enabled: false
+    principalMappings:
+      - serviceAccount: sairisp-iotmqtt
+        mtls: CN=broker-cc.mqtt.prod.aws.scania.com
+        sourceIpCidrs:
+          - 16.170.86.43/32
+          - 16.170.154.40/32
+
+  - name: ifot
+    principals:
+      owners:
+        - type: group
+          name: iris-ifot-users
+      other:
+        - type: group
+          name: iris-ifot-psa
+    consumerGroupPrefixes:
+      - ifot_consumer_group_prod
+    schemas:
+      enabled: false
+    principalMappings:
+      - serviceAccount: ifot_sap_prod_cons
+        oauth: ifot_sap_prod_cons
+        sourceIpCidrs:
+          - 138.106.38.133/32
+          - 138.106.5.22/32
+
+  - name: sma-mam
+    principals:
+      owners:
+        - type: group
+          name: iris-smamam-users
+      other:
+        - type: group
+          name: iris-smamam-psa
+    topicPrefixes:
+      - drp.maintenanceadministration.maintenance.
+    schemas:
+      enabled: false
+
+  - name: vdm
+    principals:
+      owners:
+        - type: group
+          name: iris-vdm-users
+      other:
+        - type: group
+          name: iris-vdm-psa
+    consumerGroupPrefixes:
+      - connect-fmat-servicenow-sink-vdm-consumer
+    schemas:
+      enabled: false
+    connect:
+      dedicated: false
+      name: connect-aws
+
+  - name: sap-salsa
+    principals:
+      owners:
+        - type: group
+          name: iris-sap-salsa-users
+      other:
+        - type: group
+          name: iris-sap-salsa-psa
+      topicPrefixes:
+      - salsa.s4.eps0180.demanddetails
+    schemas:
+      enabled: false
+    principalMappings:
+      - serviceAccount: sairisp-sapsalsa
+        mtls: CN=prods4hana.aws.scania.com,O=Scania CV AB,L=Sodertalje,C=SE
+        sourceIpCidrs:
+          - 3.68.40.83/32
+          - 18.198.18.157/32
+          - 3.68.17.221/32
+          - 3.67.235.98/32
+          - 3.68.38.23/32
+          - 18.198.149.19/32
+          - 3.64.131.199/32
+          - 3.64.88.217/32
+          - 3.64.142.243/32
+
+  - name: gsi
+    principals:
+      owners:
+        - type: group
+          name: iris-gsi-users
+      other:
+        - type: group
+          name: iris-gsi-psa
+    consumerGroupPrefixes:
+      - gsi
+    schemas:
+      enabled: false
+    principalMappings:
+      - serviceAccount: gsi-cdc-prod
+        oauth: gsi-cdc-prod
+        sourceIpCidrs:
+          - 99.81.54.32/32
+          - 63.34.168.146/32

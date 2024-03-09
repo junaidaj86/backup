@@ -1,0 +1,317 @@
+{
+  "main": {
+    "id": "30feb97be7d95ce9",
+    "type": "split",
+    "children": [
+      {
+        "id": "72fde0bc3e1377db",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "64b2f23ce58b13e8",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Scania/Streaming Platform/China/China.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "02cd3013b1a8fe3f",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "IK/system design/batch processing/Batch Processing.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "1de7ad05dc325b88",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "IK/Technical/Dynamic Programming/Dynamic Programming.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "12479d006e1aeb7a",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "IK/Spring/Interview questions.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "02357d2b8da6d799",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Scania/Customers/IEB.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "caa2fa7375d51e42",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "IK/Technical/Dynamic Programming/Dynamic Programming.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "90b4a4b64f304c57",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "IK/Technical/Dynamic Programming/Dynamic Programming.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "2b58f5e9d096b79f",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "IK/Technical/Dynamic Programming/Dynamic Programming.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "584e0998287c5c1a",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "zidane.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          }
+        ],
+        "currentTab": 8
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "12ab9348ed52b83d",
+    "type": "split",
+    "children": [
+      {
+        "id": "c1b14f1be3005b34",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "f4218506e7c86b4f",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "bc477f58471ff80a",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "cfe00f2aee75657d",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {}
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "ca4a4bd5241ff107",
+    "type": "split",
+    "children": [
+      {
+        "id": "6cbe950c63e8f6e6",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "7a5798b8ede93ef2",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "zidane.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "5459dcf4130923b4",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "zidane.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "e7ce15c1fb834503",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true
+              }
+            }
+          },
+          {
+            "id": "b58545e25b427a5a",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "zidane.md"
+              }
+            }
+          },
+          {
+            "id": "60cae6d3c08b1c9f",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              }
+            }
+          },
+          {
+            "id": "f5c0fe4532df607d",
+            "type": "leaf",
+            "state": {
+              "type": "mermaid-toolbar-view",
+              "state": {}
+            }
+          }
+        ],
+        "currentTab": 5
+      }
+    ],
+    "direction": "horizontal",
+    "width": 307.5,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false,
+      "mermaid-tools:Open Mermaid Toolbar": false,
+      "obsidian-excalidraw-plugin:Create new drawing": false
+    }
+  },
+  "active": "584e0998287c5c1a",
+  "lastOpenFiles": [
+    "IK/Technical/Dynamic Programming/Dynamic Programming.md",
+    "zidane.md",
+    "Excalidraw/subset of n choose k.md",
+    "Excalidraw/climbing stairs.md",
+    "Scania/Customers/IEB.md",
+    "Excalidraw/IEB KSQLDB.md",
+    "Scania/Customers/3D Experience.md",
+    "Excalidraw/3Dexp.md",
+    "Story telling/Story telling.md",
+    "Excalidraw/Drawing 2024-03-05 12.00.27.excalidraw.md",
+    "Story telling",
+    "Excalidraw/Drawing 2024-03-03 05.44.46.excalidraw.md",
+    "IK/Interview KickStart.md",
+    "IK/system design/batch processing/Inverted Index.md",
+    "IK/Technical",
+    "IK/Technical/Dynamic Programming",
+    "IK/system design/batch processing/Batch Processing.md",
+    "IK/Spring/Interview questions.md",
+    "IK/system design/batch processing",
+    "Scania/Cost Model.md",
+    "IK/Spring",
+    "IK/Untitled.md",
+    "Scania/Well architected/Stockholm audit.md",
+    "Scania/Customers/GLP.md",
+    "Scania/Customers/SLIP.md",
+    "IK/Technical/Recursion/Recursion.md",
+    "IK/Technical/Recursion",
+    "Excalidraw/Drawing 2024-02-21 14.31.28.excalidraw.md",
+    "Scania/Streaming Platform/China/China.md",
+    "Scania/Well architected/Implementation.md",
+    "Scania/KSQL",
+    "confluent cloud questions.md",
+    "educative/system design/scalability/Untitled.md",
+    "load balancer -1.png",
+    "Scania/Streaming Platform/China",
+    "Scania/Streaming Platform/Stockholm",
+    "Scania/Customers",
+    "Pasted image 20240125114911.png",
+    "Scania/Well architected/Pasted image 20240119134613.png",
+    "IK/system design/bitly/diagram-export-19-01-2024-14_56_09.png",
+    "IK/system design/bitly/diagram-export-19-01-2024-14_50_35.png",
+    "IK/system design/bitly/laod balancer-active passive.png",
+    "Untitled.canvas",
+    "IK/system design/bitly/Pasted image 20240112143636.png",
+    "IK/Untitled.canvas"
+  ]
+}
